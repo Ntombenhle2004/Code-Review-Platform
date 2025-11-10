@@ -43,6 +43,7 @@ import userRoutes from "./route/userRoutes";
 import projectRoutes from "./route/projectRoutes";
 import submissionRoutes from "./route/submissionRoute";
 import authRoutes from "./route/AuthRoutes";
+import commentRoutes from "./route/commentRoutes";
 
 const app: Express = express();
 app.use(express.json());
@@ -59,7 +60,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/submissions", submissionRoutes);
 app.use("/api/auth", authRoutes);
-
+app.use("/api", commentRoutes);
 
 // 404 handler
 app.use((request: Request, response: Response, next: NextFunction) => {
