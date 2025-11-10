@@ -66,3 +66,38 @@ export const deleteProject = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
+
+//update
+export const updateProject = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { name, description, created_by } = req.body;
+
+  if (!name && !description && !created_by) {
+    return res
+      .status(400)
+      .json({ success: false, message: "No fields to update" });
+  }
+
+  try {
+    const result = await pool.query(
+      `UPDATE projects
+       SET name = COALESCE($1, name),
+           description = COALESCE($2, description),
+           created_by = COALESCE($3, created_by)
+       WHERE id = $4
+       RETURNING *`,
+      [name, description, created_by, id]
+    );
+
+    if (result.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Project not found" });
+    }
+
+    res.status(200).json({ success: true, data: result.rows[0] });
+  } catch (err: any) {
+    console.error(err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+};

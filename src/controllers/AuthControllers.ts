@@ -30,7 +30,7 @@ export const registerUser = async (req: Request, res: Response) => {
     }
     res.status(500).json({ success: false, message: err.message });
   }
-};
+};   
 
 // LOGIN
 export const loginUser = async (req: Request, res: Response) => {
