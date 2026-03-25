@@ -22,7 +22,9 @@ The system includes features such as **user authentication**, **secure password 
 
 ---
 # Database Name
+```bash
 codeReviewPlatform
+```
 
 # Project Setup
 
