@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { pool } from "../config/database";
 
-//
+
 export const createProject = async (req: Request, res: Response) => {
   const { name, description, created_by } = req.body;
   try {

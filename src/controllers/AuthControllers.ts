@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 const SALT_ROUNDS = 10;
 
-// REGISTER
+
 export const registerUser = async (req: Request, res: Response) => {
   const { name, email, password, role } = req.body;
 
@@ -32,7 +32,7 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };   
 
-// LOGIN
+
 export const loginUser = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
