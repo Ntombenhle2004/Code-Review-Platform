@@ -125,6 +125,92 @@ Code-Review-Platform
 ├── tsconfig.json
 └── README.md
 ```
+---
+
+
+# 📌 Collaborative Code Review Platform API
+
+## 📖 Overview
+This API provides functionality for managing users, authentication, projects, submissions, comments, notifications, and analytics in a collaborative code review platform.
+
+---
+# EndPoints
+# 🔐 Authentication Endpoints
+Base URL: /api/auth
+
+POST   /api/auth/register        # Register a new user
+POST   /api/auth/login           # Login user
+
+---
+
+# 👤 Users Endpoints
+Base URL: /api/users
+
+POST   /api/users                # Create a new user
+GET    /api/users                # Get all users
+GET    /api/users/:id            # Get user by ID
+PUT    /api/users/:id            # Update user
+DELETE /api/users/:id            # Delete user
+
+---
+
+# 📁 Projects Endpoints
+Base URL: /api/projects
+
+POST   /api/projects             # Create a project
+GET    /api/projects             # Get all projects
+GET    /api/projects/:id         # Get project by ID
+PUT    /api/projects/:id         # Update project
+DELETE /api/projects/:id         # Delete project
+
+## 👥 Project Members
+
+POST   /api/projects/:id/members              # Add member to project
+DELETE /api/projects/:id/members/:userId      # Remove member from project
+
+## 📂 Project Related
+
+GET /api/projects/:id/submissions   # Get submissions for a project
+GET /api/projects/:id/stats         # Get project statistics
+
+---
+
+# 📤 Submissions Endpoints
+Base URL: /api/submissions
+
+POST   /api/submissions             # Create submission
+GET    /api/submissions             # Get all submissions
+GET    /api/submissions/:id         # Get submission by ID
+PUT    /api/submissions/:id         # Update submission
+DELETE /api/submissions/:id         # Delete submission
+
+## 🔄 Review & Status
+
+PUT  /api/submissions/:id/status           # Update submission status
+POST /api/submissions/:id/approve          # Approve submission
+POST /api/submissions/:id/request-changes  # Request changes
+
+## 📜 Reviews
+
+GET /api/submissions/:id/reviews   # Get review history
+
+---
+
+# 💬 Comments Endpoints
+
+POST   /api/submissions/:id/comments   # Create comment on submission
+GET    /api/submissions/:id/comments   # Get comments for submission
+PUT    /api/comments/:id               # Update comment
+DELETE /api/comments/:id              # Delete comment
+
+---
+
+# 🔔 Notifications Endpoints
+
+GET /api/users/:id/notifications   # Get user notifications
+
+
+---
 
 ---
 
