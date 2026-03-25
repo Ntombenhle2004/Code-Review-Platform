@@ -6,9 +6,9 @@ import {
   deleteComment,
 } from "../models/commentModel";
 
-// ➕ Add a comment to a submission
+
 export const createComment = async (req: Request, res: Response) => {
-  const { id } = req.params; // submission ID
+  const { id } = req.params; 
   const { reviewer_id, line_number, content } = req.body;
 
   if (!reviewer_id || !content) {
@@ -34,9 +34,8 @@ export const createComment = async (req: Request, res: Response) => {
   }
 };
 
-// 📜 Get all comments for a submission
 export const listComments = async (req: Request, res: Response) => {
-  const { id } = req.params; // submission ID
+  const { id } = req.params; 
   try {
     const comments = await getCommentsBySubmission(Number(id));
     res.status(200).json({ success: true, data: comments });
@@ -45,9 +44,9 @@ export const listComments = async (req: Request, res: Response) => {
   }
 };
 
-// ✏️ Update a comment
+
 export const editComment = async (req: Request, res: Response) => {
-  const { id } = req.params; // comment ID
+  const { id } = req.params;
   const { content } = req.body;
 
   if (!content) {
@@ -68,7 +67,7 @@ export const editComment = async (req: Request, res: Response) => {
   }
 };
 
-// ❌ Delete a comment
+
 export const removeComment = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {

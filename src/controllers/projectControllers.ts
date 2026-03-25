@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { pool } from "../config/database";
 
-// Create a new project
+//
 export const createProject = async (req: Request, res: Response) => {
   const { name, description, created_by } = req.body;
   try {
@@ -17,7 +17,7 @@ export const createProject = async (req: Request, res: Response) => {
   }
 };
 
-// Get all projects
+
 export const getAllProjects = async (_req: Request, res: Response) => {
   try {
     const result = await pool.query(`SELECT * FROM projects ORDER BY id ASC`);
@@ -28,7 +28,7 @@ export const getAllProjects = async (_req: Request, res: Response) => {
   }
 };
 
-// Get project by ID
+
 export const getProjectById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -47,7 +47,7 @@ export const getProjectById = async (req: Request, res: Response) => {
   }
 };
 
-// Delete project
+
 export const deleteProject = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -67,7 +67,7 @@ export const deleteProject = async (req: Request, res: Response) => {
   }
 };
 
-//update
+
 export const updateProject = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, description, created_by } = req.body;

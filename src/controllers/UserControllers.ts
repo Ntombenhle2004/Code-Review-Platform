@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { pool } from "../config/database";
 
-// Create a new user
+
 export const createUser = async (req: Request, res: Response) => {
   const { name, email, password, role } = req.body;
 
@@ -18,7 +18,7 @@ export const createUser = async (req: Request, res: Response) => {
   }
 };
 
-// Get all users
+
 export const getAllUsers = async (_req: Request, res: Response) => {
   try {
     const result = await pool.query(`SELECT * FROM users ORDER BY id ASC`);
@@ -29,7 +29,7 @@ export const getAllUsers = async (_req: Request, res: Response) => {
   }
 };
 
-// Get a single user by ID
+
 export const getUserById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -46,7 +46,7 @@ export const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-// Delete user
+
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -66,7 +66,7 @@ export const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-// Update user by ID
+
 export const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, email, role, profile_picture } = req.body;

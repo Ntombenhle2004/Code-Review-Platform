@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { pool } from "../config/database";
 
-// Create a submission
+
 export const createSubmission = async (req: Request, res: Response) => {
   const { project_id, submitted_by, code, status } = req.body;
 
@@ -18,7 +18,7 @@ export const createSubmission = async (req: Request, res: Response) => {
   }
 };
 
-// Get all submissions
+
 export const getAllSubmissions = async (_req: Request, res: Response) => {
   try {
     const result = await pool.query(
@@ -31,7 +31,7 @@ export const getAllSubmissions = async (_req: Request, res: Response) => {
   }
 };
 
-// Get submission by ID
+
 export const getSubmissionById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -50,7 +50,7 @@ export const getSubmissionById = async (req: Request, res: Response) => {
   }
 };
 
-// Delete submission
+
 export const deleteSubmission = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -71,7 +71,6 @@ export const deleteSubmission = async (req: Request, res: Response) => {
 };
 
 
-// Update submission by ID
 export const updateSubmission = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { project_id, submitted_by, code, status } = req.body;
