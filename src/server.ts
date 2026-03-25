@@ -10,6 +10,7 @@ import submissionRoutes from "./route/submissionRoute";
 import authRoutes from "./route/AuthRoutes";
 import commentRoutes from "./route/commentRoutes";
 import notificationRoutes from "./route/notificationRoute";
+import { errorHandler } from "./middleware/errorHandle";
 
 const app: Express = express();
 app.use(express.json());
@@ -33,6 +34,7 @@ app.use((request: Request, response: Response, next: NextFunction) => {
     .status(404)
     .json({ success: false, message: "Not found: this route does not exist" });
 });
+app.use(errorHandler) 
 
 const startServer = async () => {
   try {
