@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
 import { pool } from "../config/database";
 
-
 export const createProject = async (req: Request, res: Response) => {
   const { name, description, created_by } = req.body;
   try {
     const result = await pool.query(
       `INSERT INTO projects (name, description, created_by)
        VALUES ($1, $2, $3) RETURNING *`,
-      [name, description, created_by]
+      [name, description, created_by],
     );
     res.status(201).json({ success: true, data: result.rows[0] });
   } catch (err: any) {
@@ -16,7 +15,6 @@ export const createProject = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
-
 
 export const getAllProjects = async (_req: Request, res: Response) => {
   try {
@@ -27,7 +25,6 @@ export const getAllProjects = async (_req: Request, res: Response) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
-
 
 export const getProjectById = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -47,13 +44,12 @@ export const getProjectById = async (req: Request, res: Response) => {
   }
 };
 
-
 export const deleteProject = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const result = await pool.query(
       `DELETE FROM projects WHERE id = $1 RETURNING *`,
-      [id]
+      [id],
     );
     if (result.rows.length === 0) {
       return res
@@ -66,7 +62,6 @@ export const deleteProject = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: err.message });
   }
 };
-
 
 export const updateProject = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -86,7 +81,7 @@ export const updateProject = async (req: Request, res: Response) => {
            created_by = COALESCE($3, created_by)
        WHERE id = $4
        RETURNING *`,
-      [name, description, created_by, id]
+      [name, description, created_by, id],
     );
 
     if (result.rows.length === 0) {
@@ -100,4 +95,28 @@ export const updateProject = async (req: Request, res: Response) => {
     console.error(err);
     res.status(500).json({ success: false, message: err.message });
   }
+};
+
+export const addMember = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { user_id } = req.body;
+
+  const result = await pool.query(
+    `INSERT INTO project_members (project_id, user_id)
+     VALUES ($1, $2) RETURNING *`,
+    [id, user_id],
+  );
+
+  res.json({ success: true, data: result.rows[0] });
+};
+
+export const removeMember = async (req: Request, res: Response) => {
+  const { id, userId } = req.params;
+
+  await pool.query(
+    `DELETE FROM project_members WHERE project_id = $1 AND user_id = $2`,
+    [id, userId],
+  );
+
+  res.json({ success: true, message: "Member removed" });
 };

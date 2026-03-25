@@ -11,7 +11,7 @@ export const pool = new Pool({
   port: parseInt(process.env.DB_PORT || "5432"),
 });
 
-// Function to test the DB connection
+
 export const testDBConnection = async () => {
   try {
     const client = await pool.connect();
