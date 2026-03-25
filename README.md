@@ -21,7 +21,10 @@ The system includes features such as **user authentication**, **secure password 
 - Nodemon
 
 ---
-
+# Database Name
+```bash
+codeReviewPlatform
+```
 
 # Project Setup
 
