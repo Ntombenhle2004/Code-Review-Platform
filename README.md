@@ -66,25 +66,6 @@ npm start
 
 ---
 
-## Build the Project
-
-```bash
-npm run build
-```
-
-This compiles the TypeScript code into JavaScript.
-
----
-
-# Project Scripts
-
-| Script | Description |
-|------|------|
-| `npm start` | Runs the server using ts-node |
-| `npm run dev` | Runs the server with nodemon for development |
-| `npm run build` | Compiles TypeScript into JavaScript |
-
----
 
 # Main Dependencies
 
@@ -106,35 +87,6 @@ This compiles the TypeScript code into JavaScript.
 - @types/express
 - @types/jsonwebtoken
 - @types/pg
-
----
-
-# Project Structure (Example)
-
-```
-Code-Review-Platform
-│
-├── src
-│   ├── controllers
-│   ├── routes
-│   ├── middleware
-│   ├── models
-│   └── server.ts
-│
-├── node_modules
-│
-├── .env
-├── package.json
-├── tsconfig.json
-└── README.md
-```
----
-
-
-# 📌 Collaborative Code Review Platform API
-
-## 📖 Overview
-This API provides functionality for managing users, authentication, projects, submissions, comments, notifications, and analytics in a collaborative code review platform.
 
 ---
 # EndPoints
@@ -215,17 +167,94 @@ GET /api/users/:id/notifications   # Get user notifications
 
 ---
 
----
+# 🗄️ Database Schema - Collaborative Code Review Platform
 
-# Authentication
-
-The platform uses:
-
-- **Bcrypt** to hash user passwords
-- **JWT (JSON Web Tokens)** to authenticate users
-- **Middleware** to protect secure routes
+## 📖 Overview
+This section defines all database tables used in the system.
 
 ---
+
+# 👤 Users Table
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(50) DEFAULT 'submitter',
+  profile_picture VARCHAR(500)
+);
+
+---
+
+# 📁 Projects Table
+CREATE TABLE projects (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  created_by INTEGER REFERENCES users(id)
+);
+
+---
+
+# 👥 Project Members Table
+CREATE TABLE project_members (
+  id SERIAL PRIMARY KEY,
+  project_id INTEGER REFERENCES projects(id),
+  user_id INTEGER REFERENCES users(id),
+  UNIQUE(project_id, user_id)
+);
+
+---
+
+# 📤 Submissions Table
+CREATE TABLE submissions (
+  id SERIAL PRIMARY KEY,
+  project_id INTEGER REFERENCES projects(id),
+  submitted_by INTEGER REFERENCES users(id),
+  code TEXT NOT NULL,
+  status VARCHAR(50) DEFAULT 'pending',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+---
+
+# 🔄 Reviews Table
+CREATE TABLE reviews (
+  id SERIAL PRIMARY KEY,
+  submission_id INTEGER REFERENCES submissions(id),
+  reviewer_id INTEGER REFERENCES users(id),
+  status VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+---
+
+# 💬 Comments Table
+CREATE TABLE comments (
+  id SERIAL PRIMARY KEY,
+  submission_id INTEGER REFERENCES submissions(id),
+  reviewer_id INTEGER REFERENCES users(id),
+  line_number INTEGER,
+  content TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+---
+
+# 🔔 Notifications Table
+CREATE TABLE notifications (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id),
+  message TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+---
+
+
+
+---
+
 
 # Database
 
